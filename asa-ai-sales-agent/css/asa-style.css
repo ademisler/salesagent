@@ -1,0 +1,562 @@
+:root {
+    --asa-primary-color: #0083ff;
+    --asa-primary-color-rgb: 0, 131, 255; /* Added RGB equivalent */
+    --asa-text-light: #ffffff;
+    --asa-text-dark: #212529;
+    --asa-bg-light: #ffffff;
+    --asa-bg-medium: #f8f9fa;
+    --asa-border-color: #e0e0e0;
+    --asa-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --asa-font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+
+
+#asa-chatbot {
+    position: fixed;
+    z-index: 10000;
+    font-family: var(--asa-font-family);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+#asa-chatbot.asa-position-right {
+    right: 25px;
+    bottom: 25px;
+}
+
+#asa-chatbot.asa-position-left {
+    left: 25px;
+    bottom: 25px;
+}
+
+#asa-chatbot .asa-launcher {
+    background-color: var(--asa-color, var(--asa-primary-color));
+    color: var(--asa-text-light);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--asa-shadow);
+    transition: all 0.3s ease-in-out; /* More general transition */
+    position: relative; /* Added for positioning the proactive message */
+    animation: asa-pulse 2s infinite; /* Added pulse animation */
+    z-index: 10001; /* Ensure it's above the window when closed */
+}
+
+@keyframes asa-pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(var(--asa-primary-color-rgb), 0.7); /* Used new RGB variable */
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(var(--asa-primary-color-rgb), 0); /* Used new RGB variable */
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(var(--asa-primary-color-rgb), 0); /* Used new RGB variable */
+    }
+}
+
+#asa-chatbot .asa-launcher:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* Proactive Message Wrapper */
+#asa-chatbot .asa-welcome-wrapper {
+    position: absolute;
+    bottom: calc(100% + 15px); /* Position above the launcher */
+    width: max-content; /* Adjust width to content */
+    max-width: 280px; /* Max width to prevent it from being too wide */
+    background-color: var(--asa-bg-light);
+    color: var(--asa-text-dark);
+    padding: 12px 18px;
+    border-radius: 10px;
+    box-shadow: var(--asa-shadow);
+    font-size: 0.95em;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 10002;
+    white-space: normal; /* Allow text to wrap */
+    text-align: left;
+}
+
+/* Arrow for proactive message */
+#asa-chatbot .asa-welcome-wrapper::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--asa-bg-light);
+    transform: rotate(45deg);
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.05);
+    pointer-events: none;
+    z-index: -1;
+}
+
+#asa-chatbot .asa-welcome-wrapper.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-8px); /* Consistent lift on appearance */
+}
+
+/* Position-specific adjustments */
+#asa-chatbot.asa-position-right .asa-welcome-wrapper {
+    right: 0;
+}
+
+#asa-chatbot.asa-position-right .asa-welcome-wrapper::after {
+    right: 24px; /* Position arrow near the launcher icon */
+}
+
+#asa-chatbot.asa-position-left .asa-welcome-wrapper {
+    left: 0;
+}
+
+#asa-chatbot.asa-position-left .asa-welcome-wrapper::after {
+    left: 24px; /* Position arrow near the launcher icon */
+}
+
+#asa-chatbot .asa-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: flex; /* Ensure flex properties apply to img as well */
+    align-items: center;
+    justify-content: center;
+}
+
+#asa-chatbot .asa-avatar-bg {
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
+}
+
+#asa-chatbot .asa-avatar.fa-solid,
+#asa-chatbot .asa-avatar.fas,
+#asa-chatbot .asa-avatar.fa {
+    font-size: 28px;
+    /* line-height: 1; */ /* Removed as flexbox handles vertical alignment */
+    color: var(--asa-text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#asa-chatbot .asa-window {
+    width: min(90vw, 370px);
+    height: min(80vh, 500px);
+    background: var(--asa-bg-light);
+    border-radius: 16px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transform-origin: bottom right;
+    transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+    pointer-events: none;
+    z-index: 10000;
+}
+
+#asa-chatbot.asa-open .asa-window {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+#asa-chatbot.asa-open .asa-launcher {
+    transform: scale(0.8);
+    opacity: 0;
+}
+
+#asa-chatbot .asa-header {
+    background: linear-gradient(to right, var(--asa-color, var(--asa-primary-color)), color-mix(in srgb, var(--asa-color, var(--asa-primary-color)) 85%, black));
+    color: var(--asa-text-light);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#asa-chatbot .asa-header .asa-avatar {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+/* Proactive Message Close Button */
+#asa-chatbot .asa-proactive-close {
+    background: rgba(0,0,0,0.1);
+    border: none;
+    color: var(--asa-text-dark);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+#asa-chatbot .asa-proactive-close:hover {
+    opacity: 1;
+    background: rgba(0,0,0,0.2);
+    transform: scale(1.1);
+}
+
+#asa-chatbot .asa-clear-history {
+    background: none;
+    border: none;
+    color: var(--asa-text-light);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+    opacity: 0.8;
+}
+
+#asa-chatbot .asa-clear-history:hover {
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+}
+
+#asa-chatbot .asa-header-text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+#asa-chatbot .asa-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+#asa-chatbot .asa-subtitle {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+#asa-chatbot .asa-close {
+    background: none;
+    border: none;
+    color: var(--asa-text-light);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+#asa-chatbot .asa-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#asa-chatbot .asa-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: var(--asa-bg-medium);
+    display: flex;
+    flex-direction: column;
+}
+
+#asa-chatbot .asa-messages .user,
+#asa-chatbot .asa-messages .bot {
+    display: flex;
+    margin-bottom: 12px;
+    animation: messageFadeIn 0.3s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes messageFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#asa-chatbot .asa-messages .user {
+    justify-content: flex-end;
+}
+
+#asa-chatbot .asa-messages .bot {
+    justify-content: flex-start;
+}
+
+#asa-chatbot .asa-messages .bubble {
+    padding: 12px 18px;
+    border-radius: 18px; /* Squircle shape */
+    max-width: 80%;
+    line-height: 1.5;
+    word-wrap: break-word;
+    position: relative;
+    font-size: 0.95em;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08); /* Softer shadow */
+    word-break: break-word;
+}
+
+#asa-chatbot .asa-messages .user .bubble {
+    background: var(--asa-color, var(--asa-primary-color));
+    color: var(--asa-text-light);
+    border-bottom-right-radius: 6px; /* Pointed corner */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+#asa-chatbot .asa-messages .bot .bubble {
+    background: var(--asa-bg-light);
+    color: var(--asa-text-dark);
+    border: 1px solid var(--asa-border-color);
+    border-bottom-left-radius: 6px; /* Pointed corner */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+/* Custom Scrollbar */
+#asa-chatbot .asa-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+#asa-chatbot .asa-messages::-webkit-scrollbar-track {
+    background: var(--asa-bg-medium);
+    border-radius: 10px;
+}
+
+#asa-chatbot .asa-messages::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+    border: 2px solid var(--asa-bg-medium);
+}
+
+#asa-chatbot .asa-messages::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+#asa-chatbot .asa-typing {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    background-color: var(--asa-bg-medium);
+    border-top: 1px solid var(--asa-border-color);
+}
+
+#asa-chatbot .asa-typing .dot {
+    height: 8px;
+    width: 8px;
+    margin: 0 3px;
+    display: inline-block;
+    border-radius: 50%;
+    background: #ccc;
+    animation: asa-bounce 1.2s infinite ease-in-out both;
+}
+
+#asa-chatbot .asa-typing .dot:nth-child(1) { animation-delay: -0.32s; }
+#asa-chatbot .asa-typing .dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes asa-bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #asa-chatbot .asa-launcher,
+    #asa-chatbot .asa-messages .user,
+    #asa-chatbot .asa-messages .bot,
+    #asa-chatbot .asa-typing .dot {
+        animation: none !important;
+    }
+    #asa-chatbot .asa-launcher,
+    #asa-chatbot .asa-window,
+    #asa-chatbot .asa-messages .user,
+    #asa-chatbot .asa-messages .bot {
+        transition: none !important;
+    }
+}
+
+#asa-chatbot .asa-input {
+    padding: 12px;
+    border-top: 1px solid var(--asa-border-color);
+    background: var(--asa-bg-light);
+}
+
+#asa-chatbot .asa-input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--asa-bg-medium);
+    border-radius: 25px;
+    padding: 5px;
+    border: 1px solid var(--asa-border-color);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#asa-chatbot .asa-input-wrapper:focus-within {
+    border-color: var(--asa-color, var(--asa-primary-color));
+    box-shadow: 0 0 0 3px rgba(var(--asa-primary-color-rgb), 0.2);
+}
+
+#asa-chatbot .asa-input input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 10px;
+    font-size: 1rem;
+    outline: none;
+}
+
+#asa-chatbot .asa-input .asa-clear-input {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+#asa-chatbot .asa-input .asa-clear-input:hover {
+    color: #888;
+}
+
+#asa-chatbot .asa-input button {
+    background-color: var(--asa-color, var(--asa-primary-color));
+    color: var(--asa-text-light);
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+#asa-chatbot .asa-input button:hover {
+    transform: scale(1.05);
+}
+
+#asa-chatbot .asa-input button:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+    transform: scale(1);
+}
+
+#asa-chatbot .asa-credit {
+    font-size: 12px;
+    text-align: center;
+    padding: 8px;
+    background: var(--asa-bg-medium);
+    color: #6c757d;
+    border-top: 1px solid var(--asa-border-color);
+    display: flex; /* Add flexbox */
+    align-items: center; /* Vertically align items */
+    justify-content: center; /* Horizontally center items */
+    gap: 5px; /* Add a small gap */
+}
+
+#asa-chatbot .asa-credit a {
+    color: var(--asa-color, var(--asa-primary-color));
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* AI Name Reveal Animation */
+.ai-name-reveal {
+    position: relative;
+    display: inline-block;
+    width: 20px; /* Initial width for "AI" */
+    transition: width 0.35s ease-in-out;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle; /* Aligns the text properly */
+}
+
+.ai-name-reveal .short-name,
+.ai-name-reveal .full-name {
+    display: inline-block;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.ai-name-reveal .full-name {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+}
+
+.ai-name-reveal:hover {
+    width: 80px; /* Width to fit "Adem Isler" */
+}
+
+.ai-name-reveal:hover .short-name {
+    opacity: 0;
+}
+
+.ai-name-reveal:hover .full-name {
+    opacity: 1;
+    transition-delay: 0.1s; /* Delay the appearance of the full name */
+}
+
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    #asa-chatbot.asa-open .asa-window {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        max-height: 100vh; /* Use viewport height */
+        border-radius: 0;
+        transform: translateY(0); /* Reset transform */
+        transition: opacity 0.3s ease-in-out; /* Smoother transition */
+    }
+
+    #asa-chatbot.asa-position-right .asa-launcher {
+        right: 15px;
+        left: auto;
+    }
+
+    #asa-chatbot.asa-position-left .asa-launcher {
+        left: 15px;
+        right: auto;
+    }
+
+    #asa-chatbot.asa-open .asa-launcher {
+        display: none; /* Hide when chat is open */
+    }
+
+    /* Ensure the main chatbot container doesn't interfere */
+    #asa-chatbot.asa-position-right, #asa-chatbot.asa-position-left {
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        pointer-events: none; /* Allow clicks to pass through the container */
+    }
+
+    #asa-chatbot.asa-open .asa-window, #asa-chatbot .asa-launcher {
+        pointer-events: auto; /* Re-enable pointer events for the window and launcher */
+    }
+}

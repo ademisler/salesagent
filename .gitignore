@@ -1,0 +1,4 @@
+*.zip
+asa-svn/
+.DS_Store
+node_modules

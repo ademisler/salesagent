@@ -1,0 +1,365 @@
+/* ASA Admin Styles - Structural & Monochrome Overhaul */
+
+/* 1. Root Variables & Monochrome Color Palette
+-------------------------------------------------- */
+:root {
+    --asa-primary: #333;
+    --asa-primary-dark: #000;
+    --asa-text-dark: #222;
+    --asa-text-light: #666;
+    --asa-text-white: #fff;
+    --asa-border: #e0e0e0;
+    --asa-bg-main: #f5f5f5;
+    --asa-bg-card: #fff;
+    --asa-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    --asa-radius: 6px;
+    --asa-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --asa-success: #28a745;
+    --asa-error: #dc3545;
+}
+
+/* 2. General Body & Wrapper Styles
+-------------------------------------------------- */
+body { background-color: var(--asa-bg-main); }
+.wrap { background: transparent; box-shadow: none; margin-top: 20px; }
+
+/* 3. Page Header & Support Links
+-------------------------------------------------- */
+.asa-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--asa-bg-card);
+    padding: 20px 25px;
+    border-radius: var(--asa-radius);
+    box-shadow: var(--asa-shadow);
+    margin-bottom: 30px;
+}
+.asa-page-header h1 {
+    margin: 0;
+    font-size: 2.2em; /* Larger font size */
+    color: var(--asa-primary-dark); /* Darker color for prominence */
+    font-weight: 700; /* Bolder font weight */
+    padding: 10px 20px; /* Padding for the frame */
+    border: 2px solid rgba(var(--asa-primary-color-rgb), 0.3); /* More transparent frame border */
+    border-radius: var(--asa-radius); /* Rounded corners for the frame */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Slightly more pronounced shadow for the frame */
+    display: inline-block; /* To make border and padding work correctly */
+}
+
+.asa-ai-highlight {
+    color: #007bff; /* A shade of blue */
+    font-weight: 900; /* Extra bold */
+    background: linear-gradient(45deg, #007bff, #00c0ff); /* Gradient blue */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Removed text-shadow */
+}
+
+.asa-api-key-link-button {
+    background: var(--asa-primary-dark); /* Black background */
+    color: var(--asa-text-white) !important; /* White text */
+    padding: 8px 12px; /* Match support button padding */
+    border-radius: var(--asa-radius);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: 38px; /* Reduced height */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none; /* Removed border */
+}
+
+.asa-api-key-link-button:hover {
+    background: var(--asa-primary-dark); /* Match support button hover background */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+
+.asa-header-links { display: flex; align-items: center; gap: 15px; }
+.asa-support-wrapper {
+    display: flex;
+    flex-direction: row-reverse; /* Place button on right */
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Space out text and button */
+    gap: 15px; /* Increased gap for better spacing */
+    background-color: #f9f9f9;
+    padding: 10px 15px; /* Adjusted padding */
+    border-radius: var(--asa-radius);
+    border: 1px solid var(--asa-border);
+}
+.asa-bmac-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Reduced gap */
+    background: var(--asa-primary);
+    color: var(--asa-text-white) !important;
+    padding: 8px 12px; /* Adjusted padding */
+    border-radius: var(--asa-radius);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added subtle shadow */
+}
+.asa-bmac-button:hover { background: var(--asa-primary-dark); transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+.asa-bmac-button .fa-heart { color: #e91e63; }
+.asa-support-text {
+    font-size: 0.85em; /* Slightly smaller font */
+    color: var(--asa-text-light);
+    line-height: 1.3; /* Adjusted line height */
+    max-width: 250px; /* Increased max-width for more text */
+    text-align: left; /* Align text to the left */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    flex-grow: 1; /* Allow text to grow and take space */
+}
+.asa-contact-link { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--asa-text-light); font-weight: 500; transition: color 0.2s ease; padding: 10px; border-left: 1px solid var(--asa-border); margin-left: 5px; }
+.asa-contact-link:hover { color: var(--asa-primary); }
+
+/* 4. Tabs & Content Cards
+-------------------------------------------------- */
+.asa-tabs { border-bottom: 2px solid var(--asa-border); }
+.asa-tabs .nav-tab { background: transparent; border: none; border-bottom: 3px solid transparent; padding: 15px 5px; margin-right: 25px; font-weight: 600; color: var(--asa-text-light); transition: all 0.25s ease; position: relative; top: 2px; }
+.asa-tabs .nav-tab-active, .asa-tabs .nav-tab:hover { color: var(--asa-text-dark); border-bottom-color: var(--asa-primary); background: transparent; box-shadow: none; }
+.asa-tab-content { background: var(--asa-bg-card); border: none; padding: 30px; border-radius: var(--asa-radius); box-shadow: var(--asa-shadow); }
+.asa-card { border: 1px solid #f0f0f0; border-radius: var(--asa-radius); padding: 25px; margin-bottom: 20px; background: var(--asa-bg-card); box-shadow: var(--asa-shadow); }
+.asa-card:last-child { margin-bottom: 0; }
+
+/* 5. DIV-based Form Structure (Replaces form-table)
+-------------------------------------------------- */
+.asa-card-section { display: flex; padding: 20px 0; border-bottom: 1px solid #f0f0f0; }
+.asa-card-section:last-child { border-bottom: none; }
+.asa-section-label { width: 220px; font-weight: 600; color: var(--asa-text-dark); padding-right: 30px; flex-shrink: 0; line-height: 1.5; }
+.asa-section-content { flex-grow: 1; display: flex; flex-direction: column; gap: 15px; }
+
+/* 6. Form Elements & Inputs
+-------------------------------------------------- */
+.regular-text, textarea { width: 100%; max-width: 100%; padding: 12px; border: 1px solid var(--asa-border); border-radius: var(--asa-radius); transition: all 0.2s ease; }
+
+.asa-api-key-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.asa-api-key-input {
+    width: 300px; /* Adjust width as needed */
+    max-width: 100%;
+}
+
+.asa-api-key-link-button {
+    background: var(--asa-primary-dark); /* Arka plan zaten siyahtı, doğru. */
+    color: black !important; /* Yazı rengi siyah yapıldı */
+    border-radius: var(--asa-radius);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: 30px; /* Butonun yüksekliği ayarlandı */
+    line-height: 30px; /* Metni dikeyde ortalamak için line-height yüksekliğe eşitlendi */
+    padding: 0 15px; /* Dikey padding kaldırıldı, yatay padding korundu */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent; /* Input'un border'ı ile hizalama için eklendi */
+    box-sizing: border-box; /* Padding ve border hesaplamalarını tutarlı hale getirir. */
+}
+
+.asa-api-key-link-button:hover {
+    background: var(--asa-primary); /* Hover rengini biraz daha açık gri yaptık. */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.regular-text:focus, textarea:focus { border-color: var(--asa-primary); box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.1); outline: none; }
+.description { color: var(--asa-text-light); font-style: italic; margin-top: 8px; display: block;}
+.wp-picker-container .wp-color-result.button {
+    height: 38px; /* Daha küçük yükseklik */
+    width: 38px; /* Kare şeklinde */
+    border-radius: var(--asa-radius); /* Yuvarlak köşeler */
+    border: 1px solid var(--asa-border);
+    box-shadow: none; /* Gölgeyi kaldır */
+    margin-left: 10px; /* Giriş alanından biraz boşluk */
+    flex-shrink: 0;
+}
+.wp-picker-container .wp-color-result.button::after {
+    font-size: 1em; /* Daha küçük ikon */
+    line-height: 38px; /* Yüksekliğe göre ayarla */
+    width: 100%;
+    text-align: center;
+}
+.wp-picker-container {
+    display: flex; /* Flexbox kullanarak hizalama */
+    align-items: center;
+    width: 100%;
+}
+.wp-picker-container .wp-color-result {
+    order: 2; /* Düğmeyi giriş alanının sağına taşı */
+}
+.wp-picker-container .wp-picker-input-wrap {
+    order: 1; /* Giriş alanını sola taşı */
+    flex-grow: 1; /* Giriş alanının kalan alanı kaplamasını sağla */
+}
+.wp-picker-container .wp-picker-input {
+    width: 100%; /* Giriş alanının tam genişliğini kullanmasını sağla */
+}
+
+/* Native color input styling */
+.asa-color-field {
+    appearance: none;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 1px solid var(--asa-border);
+    border-radius: var(--asa-radius);
+    cursor: pointer;
+}
+.asa-color-field::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: var(--asa-radius);
+}
+.asa-color-field::-webkit-color-swatch {
+    border: none;
+    border-radius: var(--asa-radius);
+}
+
+/* 7. Specific Component Redesigns
+-------------------------------------------------- */
+.asa-icon-picker-wrapper, .asa-image-url-wrapper { width: 100%; }
+.asa-icon-picker-wrapper label, .asa-image-url-wrapper label { margin-bottom: 10px; display: block; font-weight: 500; }
+.asa-separator { margin: 20px 0; border: 0; border-top: 1px solid #f0f0f0; }
+.asa-icon-input-group { display: flex; align-items: center; gap: 10px; }
+.asa-icon-input-group .regular-text { width: 250px; max-width: 100%; }
+.asa-icon-input-group .button { height: 45px; flex-shrink: 0; }
+.asa-icon-preview { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--asa-border); border-radius: var(--asa-radius); font-size: 24px; background: #f9f9f9; flex-shrink: 0; }
+
+.asa-position-selector { display: flex; gap: 20px; }
+.asa-position-selector input[type="radio"] { display: none; }
+.asa-position-card { border: 2px solid var(--asa-border); border-radius: var(--asa-radius); padding: 20px; cursor: pointer; text-align: center; transition: all 0.2s ease; }
+.asa-position-card:hover { border-color: var(--asa-text-light); transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
+.asa-position-selector input[type="radio"]:checked + .asa-position-card { border-color: var(--asa-primary); background-color: #f9f9f9; box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.1); }
+.asa-position-preview { width: 100px; height: 60px; background-color: #e9ecef; border-radius: 5px; margin-bottom: 15px; position: relative; }
+.asa-position-preview::after { content: ''; position: absolute; bottom: 8px; width: 18px; height: 18px; background-color: var(--asa-primary); border-radius: 50%; }
+.asa-position-preview.left::after { left: 8px; }
+.asa-position-preview.right::after { right: 8px; }
+.asa-position-card span { font-weight: 600; color: var(--asa-text-dark); }
+
+/* 8. Submit Button & Feedback
+-------------------------------------------------- */
+#submit.button-primary { background: var(--asa-primary); border: none; padding: 12px 30px; height: auto; font-size: 1.1em; font-weight: 600; border-radius: var(--asa-radius); transition: all 0.25s ease; }
+#submit.button-primary:hover { background: var(--asa-primary-dark); transform: translateY(-2px); }
+#submit.button-primary.asa-saving, #submit.button-primary.asa-success, #submit.button-primary.asa-error { color: var(--asa-text-white); transform: translateY(0); }
+#submit.button-primary.asa-saving { background-color: #ffc107; }
+#submit.button-primary.asa-success { background-color: var(--asa-success); }
+#submit.button-primary.asa-error { background-color: var(--asa-error); }
+
+/* 9. Icon Picker Modal
+-------------------------------------------------- */
+#asa-icon-picker-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    z-index: 99999; /* Ensure it's on top of other elements */
+}
+.asa-icon-picker-modal-content { background-color: var(--asa-bg-card); border-radius: var(--asa-radius); padding: 30px; max-width: 800px; width: 90%; margin: auto; }
+.asa-icon-picker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--asa-border);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    background-color: var(--asa-bg-card); /* Ensure solid background for header */
+}
+.asa-icon-picker-header h2 {
+    margin: 0;
+    font-size: 1.8em;
+    color: var(--asa-text-dark);
+}
+.asa-icon-picker-close {
+    font-size: 2em; /* Larger close button */
+    color: var(--asa-text-light);
+    cursor: pointer;
+    transition: color 0.2s ease;
+    background-color: var(--asa-bg-main); /* Subtle background for close button */
+    padding: 5px 10px;
+    border-radius: var(--asa-radius);
+}
+.asa-icon-picker-close:hover {
+    color: var(--asa-text-dark);
+    background-color: var(--asa-border);
+}
+.asa-icon-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid var(--asa-border);
+    border-radius: var(--asa-radius);
+    background-color: var(--asa-bg-main);
+}
+.asa-icon-list i {
+    font-size: 36px;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid var(--asa-border);
+    border-radius: var(--asa-radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--asa-bg-card);
+    color: var(--asa-text-dark);
+}
+.asa-icon-list i:hover { background-color: var(--asa-primary); color: var(--asa-text-white); transform: scale(1.1); }
+
+/* Ensure only active tab content is visible */
+.asa-tab-content:not(.active) {
+    display: none;
+}
+
+/* API Key Test Status */
+#asa-api-key-test-status {
+    font-weight: 600;
+}
+#asa-api-key-test-status.success {
+    color: var(--asa-success);
+}
+#asa-api-key-test-status.error {
+    color: var(--asa-error);
+}
+
+#asa-color-contrast-warning {
+    color: var(--asa-error);
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+@media (max-width: 600px) {
+    .asa-card-section {
+        flex-direction: column;
+    }
+    .asa-section-label {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .asa-api-key-input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
